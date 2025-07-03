@@ -13,9 +13,9 @@ dy = [0, 0, -1, 1]
 cur_x, cur_y = r, c
 
 def isInRange(x, y, n):
-    if x == 0 or y == 0:
+    if x < 1 or y < 1:
         return False
-    elif x == n or y == n:
+    elif x >= n or y >= n:
         return False
     else:
         return True
@@ -27,13 +27,14 @@ while True:
     for i in range(n):
         next_x = cur_x + dx[i]
         next_y = cur_y + dy[i]
-        if a[next_x][next_y] > cur_val and isInRange(next_x, next_y, n):
+        cnt += 1
+        if not isInRange(next_x, next_y, n):
+            continue
+        if a[next_x][next_y] > cur_val:
             cur_x, cur_y = next_x, next_y
             cur_val = a[next_x][next_y]
             ret.append(cur_val)
             cnt = 0
-        else:
-            cnt += 1
     if cnt == 4:
         break
 print(*ret)
