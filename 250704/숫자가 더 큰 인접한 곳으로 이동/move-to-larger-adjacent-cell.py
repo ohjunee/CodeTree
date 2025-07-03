@@ -15,26 +15,29 @@ cur_x, cur_y = r, c
 def isInRange(x, y, n):
     if x < 1 or y < 1:
         return False
-    elif x >= n or y >= n:
+    elif x > n or y > n:
         return False
     else:
         return True
 ret = []
-cur_val = a[cur_x][cur_y]
+max_val = 0
 cnt = 0
-ret.append(cur_val)
 while True:
-    for i in range(n):
+    cur_val = a[cur_x][cur_y]
+    max_val = cur_val
+    max_x, max_y = cur_x, cur_y
+    ret.append(cur_val)
+    for i in range(4):
         next_x = cur_x + dx[i]
         next_y = cur_y + dy[i]
-        cnt += 1
         if not isInRange(next_x, next_y, n):
             continue
-        if a[next_x][next_y] > cur_val:
-            cur_x, cur_y = next_x, next_y
-            cur_val = a[next_x][next_y]
-            ret.append(cur_val)
-            cnt = 0
-    if cnt == 4:
+        if a[next_x][next_y] > max_val:
+            max_val = a[next_x][next_y]
+            max_x, max_y = next_x, next_y
+            break
+    if cur_x == max_x and cur_y == max_y:
         break
+    cur_x, cur_y = max_x, max_y
 print(*ret)
+
